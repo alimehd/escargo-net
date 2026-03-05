@@ -41,7 +41,7 @@ function App() {
             <p>
               <span className="highlight">ES-CARGO</span> = <strong>E</strong>arth<strong>S</strong>hip + 
               CARGO (naviguer à travers la crise) + ESCARGOT (on porte notre maison sur le dos). 
-              Fondé en 2004 par Hélène Dubé & Alain Neveu sur une pente exposée plein sud 
+              Fondé en 2004 par une gang de têtes dures off-grid sur une pente exposée plein sud 
               à <span className="highlight">Chertsey, Québec</span>.
             </p>
             <p>
@@ -179,7 +179,7 @@ function App() {
           <div className="gb-entry">
             <span className="gb-name">@terre_vivante_qc</span>
             <span className="gb-date">15/01/2026</span>
-            <p>Hélène & Alain sont des légendes. La glacière artisanale m'a SOUFFLÉ l'esprit.</p>
+            <p>Les humains derrière ce spot sont des légendes. La glacière artisanale m'a SOUFFLÉ l'esprit.</p>
           </div>
           <div className="gb-entry">
             <span className="gb-name">@xXx_solarpunk_xXx</span>
