@@ -1,0 +1,249 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  min-height: 560px;
+  overflow: hidden;
+  background: #9ac8d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__layer {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Background ──────────────────────────────────────────── */
+.hero__bg {
+  top: -33%;
+  left: 0;
+  width: 100%;
+  height: 160%;
+  object-fit: cover;
+  object-position: center bottom;
+  z-index: 1;
+}
+
+/* ── Forest trees — behind house ────────────────────────── */
+.hero__tree {
+  bottom: 0;
+  z-index: 2;
+  transform-origin: bottom center;
+}
+
+/* ── Tire pile ───────────────────────────────────────────── */
+.hero__tire-pile {
+  bottom: 0;
+  left: 3%;
+  width: min(18%, 200px);
+  z-index: 3;
+}
+
+/* ── Earthship house ─────────────────────────────────────── */
+.hero__house {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(105%, 1300px);
+  z-index: 4;
+  filter: drop-shadow(0 16px 36px rgba(16, 73, 17, 0.3));
+}
+
+/* ── Berries bush — foreground, small like tire pile ─────── */
+.hero__berries {
+  bottom: 0;
+  right: 4%;
+  width: min(18%, 210px);
+  z-index: 6;
+}
+
+/* ── Chanterelles (original instance) ───────────────────── */
+.hero__chanterelles {
+  bottom: 0;
+  left: 30%;
+  width: min(3%, 34px);
+  z-index: 6;
+}
+
+/* ── Mushroom clusters (scattered) ──────────────────────── */
+.hero__mushroom-cluster {
+  bottom: 0;
+  z-index: 6;
+  height: auto;
+}
+
+/* ── Mustard plant ───────────────────────────────────────── */
+.hero__mustard-plant {
+  bottom: 0;
+  right: 22%;
+  width: min(13%, 150px);
+  z-index: 6;
+  transform-origin: bottom center;
+}
+
+/* ── Mustard pot ─────────────────────────────────────────── */
+.hero__mustard-pot {
+  bottom: 6%;
+  right: 10%;
+  width: min(6%, 72px);
+  z-index: 7;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.22));
+}
+
+/* ── Snail ───────────────────────────────────────────────── */
+.hero__snail {
+  bottom: 1%;
+  left: 0;
+  width: min(18%, 200px);
+  z-index: 7;
+}
+
+/* ── Single tire ─────────────────────────────────────────── */
+.hero__single-tire {
+  bottom: 2%;
+  left: 0;
+  width: min(6%, 68px);
+  z-index: 7;
+}
+
+/* ── Dark scrim — centered radial, lifts text out ────────── */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(8,24,8,0.52) 0%, transparent 70%),
+    linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, transparent 18%);
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* ── Hero text ───────────────────────────────────────────── */
+.hero__text {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: -6vh;
+  padding: 0 1.5rem;
+}
+
+/* ── Logo in hero ────────────────────────────────────────── */
+.hero__logo {
+  width: min(38vw, 260px);
+  height: auto;
+  display: block;
+  filter:
+    drop-shadow(0 0 20px rgba(0,0,0,0.75))
+    drop-shadow(2px 3px 0px rgba(16,73,17,0.6));
+}
+
+.hero__eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--black-forest);
+  background: var(--mustard);
+  padding: 0.3em 1em;
+  border-radius: 999px;
+  border: 2px solid var(--black-forest);
+  box-shadow: 2px 2px 0 var(--black-forest);
+}
+
+.hero__title {
+  font-family: 'Abril Fatface', cursive;
+  font-size: clamp(4rem, 12vw, 9rem);
+  color: var(--cream);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-shadow:
+    0 0 60px rgba(0,0,0,0.9),
+    3px 3px 0 var(--black-forest),
+    6px 6px 0 var(--forest-green);
+}
+
+.hero__subtitle {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+  color: var(--cream);
+  max-width: 500px;
+  line-height: 1.6;
+  background: rgba(16, 40, 16, 0.62);
+  padding: 0.65em 1.3em;
+  border-radius: 4px;
+  border: 1px solid rgba(255,212,73,0.45);
+  backdrop-filter: blur(2px);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.hero__cta {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+  background: var(--black-forest);
+  padding: 0.72rem 1.8rem;
+  border-radius: 4px;
+  border: 3px solid var(--mustard);
+  box-shadow: 5px 5px 0 var(--forest-green);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+  margin-top: 0.4rem;
+}
+
+.hero__cta:hover {
+  background: var(--orange);
+  color: var(--black-forest);
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--forest-green);
+}
+
+/* ── Scroll hint ─────────────────────────────────────────── */
+.hero__scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.7;
+  animation: fadeBounce 2s ease infinite;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.hero__scroll-arrow {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--cream);
+  border-bottom: 2px solid var(--cream);
+  transform: rotate(45deg);
+}
+
+@keyframes fadeBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.7; }
+  50%       { transform: translateX(-50%) translateY(6px); opacity: 1;   }
+}
+
+/* ── Mobile ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero__mustard-pot   { right: 2%;  width: 10%; }
+  .hero__mustard-plant { right: 14%; width: 18%; }
+  .hero__snail         { width: 24%; }
+  .hero__single-tire   { width: 9%;  }
+  .hero__berries       { width: 24%; }
+}

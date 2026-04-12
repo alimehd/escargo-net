@@ -1,9 +1,19 @@
-*,
-*::before,
-*::after {
+/* ─── CSS Variables ─────────────────────────────────────── */
+:root {
+  --light-blue: #a8d5e2ff;
+  --orange: #f9a620ff;
+  --mustard: #ffd449ff;
+  --forest-green: #548c2fff;
+  --black-forest: #104911ff;
+  --cream: #fdf6e3;
+  --dark-text: #1a1a1a;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
@@ -11,44 +21,102 @@ html {
 }
 
 body {
-  background-color: #0d0d0d;
-  background-image:
-    radial-gradient(circle at 20% 50%, rgba(255, 0, 222, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.03) 0%, transparent 50%),
-    url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='8' y='28' font-size='20' opacity='0.03'%3E🐌%3C/text%3E%3C/svg%3E");
-  color: #ccc;
-  font-family: 'VT323', 'Courier New', monospace;
-  min-height: 100vh;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ctext y='18' font-size='18'%3E🐌%3C/text%3E%3C/svg%3E") 12 12, auto;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  background-color: var(--cream);
+  color: var(--dark-text);
+  overflow-x: hidden;
+  cursor: default;
 }
 
-::selection {
-  background: #ff00de;
-  color: #000;
+/* ─── Typography ────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'Abril Fatface', cursive;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
-::-webkit-scrollbar {
-  width: 12px;
+code, .mono {
+  font-family: 'Space Mono', monospace;
 }
 
-::-webkit-scrollbar-track {
-  background: #0d0d0d;
+/* ─── Noise texture overlay ─────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.35;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #ff00de;
-  border: 2px solid #0d0d0d;
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--forest-green); border-radius: 4px; }
+
+/* ─── Section base ──────────────────────────────────────── */
+.section {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #00ff41;
+.section-full {
+  padding: 6rem 2rem;
 }
 
-a {
-  color: #00fff9;
+/* ─── Retro dashed border accent ────────────────────────── */
+.retro-border {
+  border: 3px dashed var(--black-forest);
+}
+
+/* ─── Tag / badge ───────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+}
+
+/* ─── Utility ────────────────────────────────────────────── */
+.text-center { text-align: center; }
+.text-orange { color: var(--orange); }
+.text-green { color: var(--forest-green); }
+.text-mustard { color: var(--mustard); }
+.bg-forest { background: var(--black-forest); }
+.bg-green { background: var(--forest-green); }
+.bg-blue { background: var(--light-blue); }
+.bg-mustard { background: var(--mustard); }
+.bg-orange { background: var(--orange); }
+
+/* ─── Horizontal rule ───────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 3px solid var(--black-forest);
+  margin: 0;
+}
+
+.divider-dashed {
+  border: none;
+  border-top: 3px dashed var(--forest-green);
+  margin: 0;
+}
+
+/* ─── Animated underline link ───────────────────────────── */
+a.underline-link {
+  color: inherit;
   text-decoration: none;
+  background-image: linear-gradient(var(--orange), var(--orange));
+  background-size: 0% 3px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.3s ease;
 }
-
-a:hover {
-  color: #ff00de;
+a.underline-link:hover {
+  background-size: 100% 3px;
 }
