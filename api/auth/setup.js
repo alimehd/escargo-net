@@ -1,6 +1,6 @@
-import { getDb, isAdminEmail, setCorsHeaders } from '../_db.js'
+const { getDb, isAdminEmail, setCorsHeaders } = require('../_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
@@ -19,7 +19,6 @@ export default async function handler(req, res) {
   const role = isAdminEmail(normalised) ? 'admin' : 'booker'
 
   if (role === 'admin') {
-    // Upsert the admin user record
     await sql`
       INSERT INTO users (email, name, pin, role)
       VALUES (${normalised}, ${trimmedName}, ${String(pin)}, 'admin')
@@ -27,14 +26,13 @@ export default async function handler(req, res) {
       DO UPDATE SET name = ${trimmedName}, pin = ${String(pin)}, role = 'admin'
     `
   } else {
-    // Only allow setup if the email already exists in the users table (added by admin)
-    const [existing] = await sql`
+    const rows = await sql`
       SELECT id, pin FROM users WHERE email = ${normalised} AND role = 'booker'
     `
-    if (!existing) {
+    if (!rows.length) {
       return res.status(403).json({ error: 'This email has not been granted access' })
     }
-    if (existing.pin) {
+    if (rows[0].pin) {
       return res.status(400).json({ error: 'Account already set up. Contact an admin to reset your PIN.' })
     }
     await sql`

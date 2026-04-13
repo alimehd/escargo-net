@@ -1,6 +1,6 @@
-import { getDb, setCorsHeaders, verifyAuth } from '../_db.js'
+const { getDb, setCorsHeaders, verifyAuth } = require('../_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
 
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     return res.json({ requests })
   }
 
-  // ── PUT: update request status and optionally grant access ───────────────
+  // ── PUT: approve or deny a request ───────────────────────────────────────
   if (req.method === 'PUT') {
     const { id, status } = req.body || {}
     if (!id || !status) return res.status(400).json({ error: 'id and status are required' })
@@ -26,23 +26,22 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'status must be "approved" or "denied"' })
     }
 
-    const [request] = await sql`
+    const rows = await sql`
       UPDATE access_requests SET status = ${status} WHERE id = ${id} RETURNING *
     `
-    if (!request) return res.status(404).json({ error: 'Request not found' })
+    if (!rows.length) return res.status(404).json({ error: 'Request not found' })
 
-    // If approved, add the email to permitted users (if not already there)
     if (status === 'approved') {
-      const [existing] = await sql`SELECT id FROM users WHERE email = ${request.email}`
-      if (!existing) {
+      const existing = await sql`SELECT id FROM users WHERE email = ${rows[0].email}`
+      if (!existing.length) {
         await sql`
-          INSERT INTO users (email, role) VALUES (${request.email}, 'booker')
+          INSERT INTO users (email, role) VALUES (${rows[0].email}, 'booker')
           ON CONFLICT (email) DO NOTHING
         `
       }
     }
 
-    return res.json({ request })
+    return res.json({ request: rows[0] })
   }
 
   return res.status(405).json({ error: 'Method not allowed' })

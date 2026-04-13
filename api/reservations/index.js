@@ -1,30 +1,22 @@
-import { getDb, setCorsHeaders, verifyAuth } from '../_db.js'
+const { getDb, setCorsHeaders, verifyAuth } = require('../_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
 
   const sql = getDb()
   const user = await verifyAuth(req, sql)
-
   if (!user) return res.status(401).json({ error: 'Unauthorised' })
 
   // ── GET: list reservations ───────────────────────────────────────────────
   if (req.method === 'GET') {
-    let reservations
-
-    if (user.role === 'admin') {
-      reservations = await sql`
-        SELECT * FROM reservations ORDER BY start_date, spot_type, spot_number
-      `
-    } else {
-      reservations = await sql`
-        SELECT * FROM reservations
-        WHERE is_public = true OR user_email = ${user.email}
-        ORDER BY start_date, spot_type, spot_number
-      `
-    }
-
+    const reservations = user.role === 'admin'
+      ? await sql`SELECT * FROM reservations ORDER BY start_date, spot_type, spot_number`
+      : await sql`
+          SELECT * FROM reservations
+          WHERE is_public = true OR user_email = ${user.email}
+          ORDER BY start_date, spot_type, spot_number
+        `
     return res.json({ reservations })
   }
 
@@ -46,19 +38,18 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'End date must be on or after start date' })
     }
 
-    // Check for overlapping reservations on the same spot
-    const [conflict] = await sql`
+    const conflicts = await sql`
       SELECT id FROM reservations
       WHERE spot_type = ${spotType}
         AND spot_number = ${num}
         AND start_date <= ${endDate}
         AND end_date   >= ${startDate}
     `
-    if (conflict) {
+    if (conflicts.length) {
       return res.status(409).json({ error: 'That spot is already reserved for part or all of the selected dates' })
     }
 
-    const [created] = await sql`
+    const rows = await sql`
       INSERT INTO reservations
         (user_email, user_name, spot_type, spot_number, start_date, end_date, notes, is_public)
       VALUES
@@ -66,7 +57,7 @@ export default async function handler(req, res) {
          ${notes || null}, ${!!isPublic})
       RETURNING *
     `
-    return res.status(201).json({ reservation: created })
+    return res.status(201).json({ reservation: rows[0] })
   }
 
   return res.status(405).json({ error: 'Method not allowed' })

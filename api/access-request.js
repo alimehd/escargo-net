@@ -1,6 +1,6 @@
-import { getDb, isAdminEmail, setCorsHeaders } from './_db.js'
+const { getDb, isAdminEmail, setCorsHeaders } = require('./_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
@@ -16,23 +16,22 @@ export default async function handler(req, res) {
 
   const sql = getDb()
 
-  // Check if already a permitted user
-  const [existing] = await sql`SELECT id FROM users WHERE email = ${normalised}`
-  if (existing) {
+  const existing = await sql`SELECT id FROM users WHERE email = ${normalised}`
+  if (existing.length) {
     return res.status(400).json({ error: 'This email already has access' })
   }
 
-  // Avoid duplicate pending requests
-  const [pending] = await sql`
+  const pending = await sql`
     SELECT id FROM access_requests
     WHERE email = ${normalised} AND status = 'pending'
   `
-  if (pending) {
+  if (pending.length) {
     return res.json({ ok: true, message: 'A request is already pending for this email' })
   }
 
   await sql`
-    INSERT INTO access_requests (email, name) VALUES (${normalised}, ${name?.trim() || null})
+    INSERT INTO access_requests (email, name)
+    VALUES (${normalised}, ${(name || '').trim() || null})
   `
 
   return res.status(201).json({ ok: true })

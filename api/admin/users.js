@@ -1,6 +1,6 @@
-import { getDb, setCorsHeaders, verifyAuth } from '../_db.js'
+const { getDb, setCorsHeaders, verifyAuth } = require('../_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
 
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(403).json({ error: 'Admin access required' })
   }
 
-  // ── GET: list permitted users ────────────────────────────────────────────
+  // ── GET: list all users ──────────────────────────────────────────────────
   if (req.method === 'GET') {
     const users = await sql`
       SELECT id, email, name, role, pin,
@@ -22,27 +22,25 @@ export default async function handler(req, res) {
     return res.json({ users })
   }
 
-  // ── POST: add a permitted user ───────────────────────────────────────────
+  // ── POST: add permitted user ─────────────────────────────────────────────
   if (req.method === 'POST') {
     const { email } = req.body || {}
     if (!email) return res.status(400).json({ error: 'Email is required' })
 
     const normalised = email.toLowerCase().trim()
-
-    const [existing] = await sql`SELECT id FROM users WHERE email = ${normalised}`
-    if (existing) {
+    const existing = await sql`SELECT id FROM users WHERE email = ${normalised}`
+    if (existing.length) {
       return res.status(409).json({ error: 'This email is already in the system' })
     }
 
-    const [created] = await sql`
-      INSERT INTO users (email, role)
-      VALUES (${normalised}, 'booker')
+    const rows = await sql`
+      INSERT INTO users (email, role) VALUES (${normalised}, 'booker')
       RETURNING id, email, role, created_at
     `
-    return res.status(201).json({ user: created })
+    return res.status(201).json({ user: rows[0] })
   }
 
-  // ── DELETE: remove a permitted user ─────────────────────────────────────
+  // ── DELETE: remove permitted user ────────────────────────────────────────
   if (req.method === 'DELETE') {
     const { email } = req.body || {}
     if (!email) return res.status(400).json({ error: 'Email is required' })

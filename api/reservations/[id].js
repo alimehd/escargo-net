@@ -1,6 +1,6 @@
-import { getDb, setCorsHeaders, verifyAuth } from '../_db.js'
+const { getDb, setCorsHeaders, verifyAuth } = require('../_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
 
@@ -11,9 +11,10 @@ export default async function handler(req, res) {
   const id = parseInt(req.query.id, 10)
   if (!id) return res.status(400).json({ error: 'Invalid reservation ID' })
 
-  const [existing] = await sql`SELECT * FROM reservations WHERE id = ${id}`
-  if (!existing) return res.status(404).json({ error: 'Reservation not found' })
+  const rows = await sql`SELECT * FROM reservations WHERE id = ${id}`
+  if (!rows.length) return res.status(404).json({ error: 'Reservation not found' })
 
+  const existing = rows[0]
   const isOwner = existing.user_email === user.email
   const isAdmin = user.role === 'admin'
   if (!isOwner && !isAdmin) return res.status(403).json({ error: 'Forbidden' })
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'End date must be on or after start date' })
     }
 
-    const [conflict] = await sql`
+    const conflicts = await sql`
       SELECT id FROM reservations
       WHERE spot_type = ${spotType}
         AND spot_number = ${num}
@@ -44,11 +45,11 @@ export default async function handler(req, res) {
         AND end_date   >= ${startDate}
         AND id != ${id}
     `
-    if (conflict) {
+    if (conflicts.length) {
       return res.status(409).json({ error: 'That spot is already reserved for part or all of the selected dates' })
     }
 
-    const [updated] = await sql`
+    const updated = await sql`
       UPDATE reservations
       SET spot_type   = ${spotType},
           spot_number = ${num},
@@ -59,7 +60,7 @@ export default async function handler(req, res) {
       WHERE id = ${id}
       RETURNING *
     `
-    return res.json({ reservation: updated })
+    return res.json({ reservation: updated[0] })
   }
 
   // ── DELETE: remove reservation ───────────────────────────────────────────

@@ -1,6 +1,6 @@
-import { getDb, isAdminEmail, setCorsHeaders } from '../_db.js'
+const { getDb, isAdminEmail, setCorsHeaders } = require('../_db')
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   setCorsHeaders(res)
   if (req.method === 'OPTIONS') return res.status(200).end()
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
@@ -14,18 +14,16 @@ export default async function handler(req, res) {
   const sql = getDb()
 
   if (isAdminEmail(normalised)) {
-    const [user] = await sql`
-      SELECT pin FROM users WHERE email = ${normalised}
-    `
-    return res.json({ userType: 'admin', setupComplete: !!(user?.pin) })
+    const rows = await sql`SELECT pin FROM users WHERE email = ${normalised}`
+    return res.json({ userType: 'admin', setupComplete: !!(rows[0] && rows[0].pin) })
   }
 
-  const [user] = await sql`
+  const rows = await sql`
     SELECT pin FROM users WHERE email = ${normalised} AND role = 'booker'
   `
 
-  if (user) {
-    return res.json({ userType: 'booker', setupComplete: !!(user.pin) })
+  if (rows.length) {
+    return res.json({ userType: 'booker', setupComplete: !!(rows[0].pin) })
   }
 
   return res.json({ userType: 'unknown' })
