@@ -59,10 +59,6 @@ function formatDisplayDate(str) {
     .toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })
 }
 
-function addMonths(year, month, n) {
-  const d = new Date(year, month + n, 1)
-  return { year: d.getFullYear(), month: d.getMonth() }
-}
 
 // ── Main page component ────────────────────────────────────────────────────
 
@@ -81,7 +77,6 @@ export default function ReservationsPage() {
   const today = new Date()
   const [calYear,  setCalYear]  = useState(today.getFullYear())
   const [calMonth, setCalMonth] = useState(today.getMonth())
-  const [calSpan,  setCalSpan]  = useState(1)   // 1 or 3 months
 
   // Click-to-select state
   const [selecting,  setSelecting]  = useState(null)  // {spotType, spotNumber, date}
@@ -368,10 +363,6 @@ export default function ReservationsPage() {
 
   // ── Months to display ─────────────────────────────────────────────────────
 
-  const monthsToShow = Array.from({ length: calSpan }, (_, i) =>
-    addMonths(calYear, calMonth, i)
-  )
-
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
@@ -538,24 +529,12 @@ export default function ReservationsPage() {
                 <div className="rscal">
                   <div className="rscal__nav">
                     <button className="rs-btn rs-btn--icon" onClick={prevMonth}>&larr;</button>
-                    <span className="rscal__month">
-                      {MONTHS[calMonth]} {calYear}
-                      {calSpan > 1 && ` – ${MONTHS[addMonths(calYear, calMonth, calSpan - 1).month]} ${addMonths(calYear, calMonth, calSpan - 1).year}`}
-                    </span>
+                    <span className="rscal__month">{MONTHS[calMonth]} {calYear}</span>
                     <button className="rs-btn rs-btn--icon" onClick={nextMonth}>&rarr;</button>
-
-                    <div className="rscal__controls">
-                      <div className="rscal__span-toggle">
-                        <button className={`rscal__span-btn ${calSpan === 1 ? 'rscal__span-btn--active' : ''}`}
-                          onClick={() => setCalSpan(1)}>1 month</button>
-                        <button className={`rscal__span-btn ${calSpan === 3 ? 'rscal__span-btn--active' : ''}`}
-                          onClick={() => setCalSpan(3)}>3 months</button>
-                      </div>
-                      <button className="rs-btn rs-btn--secondary rscal__new-btn"
-                        onClick={() => { cancelSelection(); openNewBooking() }}>
-                        + New reservation
-                      </button>
-                    </div>
+                    <button className="rs-btn rs-btn--secondary rscal__new-btn"
+                      onClick={() => { cancelSelection(); openNewBooking() }}>
+                      + New reservation
+                    </button>
                   </div>
 
                   {selecting && (
@@ -576,29 +555,20 @@ export default function ReservationsPage() {
                   {resLoading ? (
                     <p className="rscal__loading">Loading...</p>
                   ) : (
-                    <div className={`rscal__grids rscal__grids--${calSpan}`}>
-                      {monthsToShow.map(({ year, month }) => (
-                        <div key={`${year}-${month}`} className="rscal__grid-wrap">
-                          {calSpan > 1 && (
-                            <div className="rscal__grid-label">{MONTHS[month]} {year}</div>
-                          )}
-                          <CalendarGrid
-                            year={year}
-                            month={month}
-                            reservations={reservations}
-                            authEmail={auth.email}
-                            isAdmin={isAdmin}
-                            selecting={selecting}
-                            hoverDate={hoverDate}
-                            onCellClick={handleCellClick}
-                            onCellHover={handleCellHover}
-                            cellReservation={cellReservation}
-                            cellClass={cellClass}
-                            cellTitle={cellTitle}
-                          />
-                        </div>
-                      ))}
-                    </div>
+                    <CalendarGrid
+                      year={calYear}
+                      month={calMonth}
+                      reservations={reservations}
+                      authEmail={auth.email}
+                      isAdmin={isAdmin}
+                      selecting={selecting}
+                      hoverDate={hoverDate}
+                      onCellClick={handleCellClick}
+                      onCellHover={handleCellHover}
+                      cellReservation={cellReservation}
+                      cellClass={cellClass}
+                      cellTitle={cellTitle}
+                    />
                   )}
                 </div>
               </div>
