@@ -1,37 +1,56 @@
 import './Activites.css'
 
-const activities = [
+// Summer 2026 — June 1 = Monday
+const MONTHS = [
   {
-    title: 'Permaculture Gardens',
-    tag: 'Ongoing',
-    color: 'green',
-    desc: 'Food forests, vegetable beds, herb spirals and seed-saving initiatives. The gardens are tended collectively and supply both the commune and community meals throughout the growing season.',
+    name: 'June',
+    events: [
+      { date: 6,  day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 7,  day: 'Sun', label: 'Community Brunch',                  type: 'brunch'  },
+      { date: 13, day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 14, day: 'Sun', label: 'Build Day',                        type: 'build'   },
+      { date: 20, day: 'Sat', label: 'Garden Day & Solstice Gathering',  type: 'special' },
+      { date: 21, day: 'Sun', label: 'Community Brunch',                  type: 'brunch'  },
+      { date: 27, day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 28, day: 'Sun', label: 'Open House & Site Tour',           type: 'special' },
+    ],
   },
   {
-    title: 'Construction in Progress',
-    tag: 'Build Days',
-    color: 'blue',
-    desc: "The earthship is always growing. Tire-packing sessions, earthen plastering, bottle-wall building — hands-on construction days open to anyone willing to learn and get their hands dirty. No experience needed.",
+    name: 'July',
+    events: [
+      { date: 4,  day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 5,  day: 'Sun', label: 'Community Brunch',                  type: 'brunch'  },
+      { date: 11, day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 12, day: 'Sun', label: 'Build Day',                        type: 'build'   },
+      { date: 18, day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 19, day: 'Sun', label: 'Community Brunch',                  type: 'brunch'  },
+      { date: 25, day: 'Sat', label: 'Garden Day & Market Day',          type: 'market'  },
+      { date: 26, day: 'Sun', label: 'Midsummer Potluck & Music',        type: 'special' },
+    ],
   },
   {
-    title: 'Material Salvage',
-    tag: 'Circular',
-    color: 'mustard',
-    desc: 'We collect reclaimed tires, glass bottles, aluminum cans, wood and hardware for construction. Regular salvage runs and material drops. Everything destined for the landfill becomes building material.',
-  },
-  {
-    title: 'Communal Art Workshops',
-    tag: 'Creative',
-    color: 'orange',
-    desc: 'Natural pigment painting, sculpture from reclaimed materials, mosaic work, screen printing on fabric. Workshops run by resident and visiting artists in an open, non-hierarchical studio environment.',
-  },
-  {
-    title: 'Fundraising Events',
-    tag: 'Community',
-    color: 'green',
-    desc: 'Potlucks, benefit shows, art auctions and market days. Every event funds the next phase of construction or new programming. Come hungry and leave inspired — and broke in the best way.',
+    name: 'August',
+    events: [
+      { date: 1,  day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 2,  day: 'Sun', label: 'Community Brunch',                  type: 'brunch'  },
+      { date: 8,  day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 9,  day: 'Sun', label: 'Build Day',                        type: 'build'   },
+      { date: 15, day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 16, day: 'Sun', label: 'Community Brunch',                  type: 'brunch'  },
+      { date: 22, day: 'Sat', label: 'Garden Day & Harvest Market',      type: 'market'  },
+      { date: 29, day: 'Sat', label: 'Garden Day',                       type: 'garden'  },
+      { date: 30, day: 'Sun', label: 'End of Summer Celebration',        type: 'special' },
+    ],
   },
 ]
+
+const TYPE_META = {
+  garden:  { label: 'Garden',   color: 'green'   },
+  brunch:  { label: 'Brunch',   color: 'orange'  },
+  build:   { label: 'Build',    color: 'blue'    },
+  market:  { label: 'Market',   color: 'mustard' },
+  special: { label: 'Special',  color: 'red'     },
+}
 
 export default function Activities() {
   return (
@@ -43,25 +62,50 @@ export default function Activities() {
           <span className="tag" style={{ color: 'var(--forest-green)', borderColor: 'var(--forest-green)' }}>
             What's happening
           </span>
-          <h2 className="act-header__title">Life on the land.</h2>
+          <h2 className="act-header__title">Summer 2026.</h2>
           <p className="act-header__lead">
-            L'Es-Cargo is not a museum piece — it's a living, growing organism.
-            Here's what goes on across the seasons.
+            Garden days every Saturday, community brunch every two weeks, build days,
+            market days and a few surprises. Here is what we have planned.
           </p>
         </div>
       </div>
 
-      {/* ── Activity grid ──────────────────────────────── */}
-      <div className="activities-grid">
-        {activities.map(({ title, tag, color, desc }, i) => (
-          <div className={`activity-card activity-card--${color}`} key={title}>
-            <div className="activity-card__top">
-              <span className="activity-card__index mono">{String(i + 1).padStart(2, '0')}</span>
-              <span className="tag activity-card__tag">{tag}</span>
+      {/* ── Events calendar ─────────────────────────────── */}
+      <div className="events-calendar">
+        {MONTHS.map(({ name, events }) => (
+          <div className="events-month" key={name}>
+            <div className="events-month__header">
+              <h3 className="events-month__name">{name}</h3>
+              <span className="events-month__year mono">2026</span>
             </div>
-            <h3 className="activity-card__title">{title}</h3>
-            <p className="activity-card__desc">{desc}</p>
+            <ul className="events-list">
+              {events.map((ev, i) => {
+                const meta = TYPE_META[ev.type]
+                return (
+                  <li key={i} className={`event-row event-row--${meta.color}`}>
+                    <div className="event-row__date">
+                      <span className="event-row__day mono">{ev.day}</span>
+                      <span className="event-row__num">{ev.date}</span>
+                    </div>
+                    <span className="event-row__label">{ev.label}</span>
+                    <span className={`event-row__tag event-row__tag--${meta.color} mono`}>
+                      {meta.label}
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
+        ))}
+      </div>
+
+      {/* ── Legend ──────────────────────────────────────── */}
+      <div className="events-legend">
+        {Object.values(TYPE_META).map(({ label, color }) => (
+          <span key={label} className={`events-legend__item events-legend__item--${color}`}>
+            <span className={`events-legend__dot events-legend__dot--${color}`} />
+            {label}
+          </span>
         ))}
       </div>
 
@@ -73,7 +117,7 @@ export default function Activities() {
             {[
               { season: 'Spring', note: 'Planting, tire-packing sessions, mud season builds.' },
               { season: 'Summer', note: 'Concerts, camping, workshops, market days.' },
-              { season: 'Fall', note: 'Harvest, seed-saving, fundraising dinners.' },
+              { season: 'Fall',   note: 'Harvest, seed-saving, fundraising dinners.' },
               { season: 'Winter', note: 'Earthship tours, planning retreats, cozy art ateliers.' },
             ].map(({ season, note }) => (
               <div className="season-card" key={season}>
