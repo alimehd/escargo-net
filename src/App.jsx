@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { LangProvider } from './context/LangContext'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import Welcome from './components/Accueil'
@@ -26,9 +27,11 @@ function HomePage() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/"             element={<HomePage />} />
-      <Route path="/reservations" element={<ReservationsPage />} />
-    </Routes>
+    <LangProvider>
+      <Routes>
+        <Route path="/"             element={<HomePage />} />
+        <Route path="/reservations" element={<ReservationsPage />} />
+      </Routes>
+    </LangProvider>
   )
 }

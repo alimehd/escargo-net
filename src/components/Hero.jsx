@@ -13,6 +13,7 @@ import singleTire from '../../single-tire.png'
 import tirePile from '../../tire-pile-removebg-preview.png'
 import berriesBushes from '../../berries-bushes.png'
 import chanterelles from '../../chanterelles-removebg-preview.png'
+import { useLang } from '../context/LangContext'
 import './Hero.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -46,6 +47,7 @@ const MUSHROOMS = [
 ]
 
 export default function Hero() {
+  const { t } = useLang()
   const heroRef         = useRef(null)
   const bgRef           = useRef(null)
   const houseRef        = useRef(null)
@@ -225,17 +227,14 @@ export default function Hero() {
 
       {/* Text */}
       <div className="hero__text" ref={titleRef}>
-        <div className="hero__eyebrow mono">Quebec · Earthship · Commune</div>
-        <img src={logo} alt="L'Es-Cargo" className="hero__logo" />
-        <p className="hero__subtitle">
-          Cultivate the imagination — nurturing new ways of living,
-          creating, and connecting.
-        </p>
-        <a href="#welcome" className="hero__cta">Discover →</a>
+        <div className="hero__eyebrow mono">{t('hero_eyebrow')}</div>
+        <img src={logo} alt="Escargo" className="hero__logo" />
+        <p className="hero__subtitle">{t('hero_subtitle')}</p>
+        <a href="#welcome" className="hero__cta">{t('hero_cta')}</a>
       </div>
 
       <div className="hero__scroll-hint" aria-hidden="true">
-        <span className="mono">scroll</span>
+        <span className="mono">{t('hero_scroll')}</span>
         <div className="hero__scroll-arrow" />
       </div>
 

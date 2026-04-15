@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import logo from '../../LOGO.png'
+import { useLang } from '../context/LangContext'
 import './Nav.css'
-
-const homeLinks = [
-  { href: '#welcome',     label: 'Home' },
-  { href: '#history',     label: 'History' },
-  { href: '#activities',  label: 'Activities' },
-  { href: '#get-involved', label: 'Get Involved' },
-]
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const { lang, setLang, t } = useLang()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
@@ -22,15 +17,21 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Build anchor href: on home page use fragment; from other pages prepend /
   function anchorHref(hash) {
     return isHome ? hash : `/${hash}`
   }
 
+  const homeLinks = [
+    { href: '#welcome',      label: t('nav_home') },
+    { href: '#history',      label: t('nav_history') },
+    { href: '#activities',   label: t('nav_activities') },
+    { href: '#get-involved', label: t('nav_getInvolved') },
+  ]
+
   return (
     <nav className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <a href={isHome ? '#hero' : '/'} className="nav__logo">
-        <img src={logo} alt="L'Es-Cargo" className="nav__logo-img" />
+        <img src={logo} alt="Escargo" className="nav__logo-img" />
       </a>
 
       <button
@@ -51,13 +52,22 @@ export default function Nav() {
         ))}
         <li>
           <a href="/reservations" className="nav__link" onClick={() => setOpen(false)}>
-            Reservations
+            {t('nav_reservations')}
           </a>
         </li>
         <li>
           <a href={anchorHref('#get-involved')} className="nav__cta" onClick={() => setOpen(false)}>
-            Join Us
+            {t('nav_joinUs')}
           </a>
+        </li>
+        <li>
+          <button
+            className="nav__lang-toggle"
+            onClick={() => { setLang(lang === 'en' ? 'fr' : 'en'); setOpen(false) }}
+            aria-label="Toggle language"
+          >
+            {lang === 'en' ? 'FR' : 'EN'}
+          </button>
         </li>
       </ul>
     </nav>

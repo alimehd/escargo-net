@@ -1,7 +1,17 @@
+import { useLang } from '../context/LangContext'
 import './Historique.css'
 
-
 export default function History() {
+  const { t } = useLang()
+
+  const principles = [
+    [t('principle_1_title'), t('principle_1_desc')],
+    [t('principle_2_title'), t('principle_2_desc')],
+    [t('principle_3_title'), t('principle_3_desc')],
+    [t('principle_4_title'), t('principle_4_desc')],
+    [t('principle_5_title'), t('principle_5_desc')],
+  ]
+
   return (
     <section id="history" className="historique-wrapper">
 
@@ -9,14 +19,15 @@ export default function History() {
       <div className="hist-header bg-forest">
         <div className="hist-header__inner">
           <span className="tag" style={{ color: 'var(--mustard)', borderColor: 'var(--mustard)' }}>
-            History
+            {t('hist_tag')}
           </span>
           <h2 className="hist-header__title">
-            From an idea<br />to a movement.
+            {t('hist_title').split('\n').map((line, i) => (
+              <span key={i}>{line}{i === 0 && <br />}</span>
+            ))}
           </h2>
           <p className="hist-header__lead">
-            L'Es-Cargo carries the legacy of a radical architecture
-            born from the desire to reconcile humanity with the planet.
+            {t('hist_lead')}
           </p>
         </div>
       </div>
@@ -25,33 +36,15 @@ export default function History() {
       <div className="earthship-explainer">
         <div className="earthship-explainer__text">
           <span className="tag" style={{ color: 'var(--forest-green)', borderColor: 'var(--forest-green)' }}>
-            What is an earthship?
+            {t('earthship_tag')}
           </span>
-          <h3>A vessel made of earth.</h3>
-          <p>
-            An earthship is <strong>radical bioclimatic architecture</strong>: built
-            primarily with reclaimed materials (tires, bottles, cans), it generates
-            its own energy, harvests rainwater, treats its own waste on-site, and
-            grows food — all without connecting to public utilities.
-          </p>
-          <p>
-            The concept rests on six foundations: <em>off-grid energy,
-            autonomous water, on-site sewage treatment, integrated food production,
-            reused materials, and passive thermal comfort</em>. Every wall is as much
-            a political act as an architectural one.
-          </p>
-          <p>
-            To build an earthship is to refuse the idea that comfort must cost the earth.
-          </p>
+          <h3>{t('earthship_title')}</h3>
+          <p dangerouslySetInnerHTML={{ __html: t('earthship_p1') }} />
+          <p dangerouslySetInnerHTML={{ __html: t('earthship_p2') }} />
+          <p>{t('earthship_p3')}</p>
         </div>
         <div className="earthship-explainer__principles">
-          {[
-            ['Solar & Wind Energy', 'Photovoltaic panels, battery storage, total grid independence.'],
-            ['Rainwater Harvesting', 'Filtered rainwater for household use, runoff managed by the land.'],
-            ['Integrated Gardens', 'Interior greenhouses fed by greywater, year-round food production.'],
-            ['Reclaimed Materials', 'Used tires, bottles, cans — waste transformed into structure.'],
-            ['Passive Thermal Comfort', 'Wall thermal mass and solar orientation maintain temperature without external heating.'],
-          ].map(([title, desc], i) => (
+          {principles.map(([title, desc], i) => (
             <div className="principle-card" key={title}>
               <span className="principle-card__num mono">{String(i + 1).padStart(2, '0')}</span>
               <div>
@@ -62,7 +55,6 @@ export default function History() {
           ))}
         </div>
       </div>
-
 
     </section>
   )

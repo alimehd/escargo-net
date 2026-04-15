@@ -1,6 +1,9 @@
+import { useLang } from '../context/LangContext'
 import './Accueil.css'
 
 export default function Welcome() {
+  const { t } = useLang()
+
   return (
     <section id="welcome" className="accueil-wrapper">
 
@@ -8,14 +11,13 @@ export default function Welcome() {
       <div className="mission-band">
         <div className="mission-band__inner">
           <span className="tag" style={{ color: 'var(--mustard)', borderColor: 'var(--mustard)' }}>
-            Our Mission
+            {t('welcome_tag')}
           </span>
           <h2 className="mission-band__title">
-            Cultivate the imagination.
+            {t('welcome_title')}
           </h2>
           <p className="mission-band__text">
-            To nurture new ways of living, creating, and connecting on the grounds
-            of Quebec's first earthship — through community, art, and sustainable practice.
+            {t('welcome_text')}
           </p>
         </div>
       </div>
@@ -23,16 +25,16 @@ export default function Welcome() {
       {/* ── Three pillars ────────────────────────────────── */}
       <div className="pillars">
         <div className="pillar pillar--blue">
-          <h3 className="pillar__title">Live</h3>
-          <p>An autonomous habitat: solar energy, rainwater harvesting, tire walls, integrated gardens. A home that breathes with the earth.</p>
+          <h3 className="pillar__title">{t('pillar_live_title')}</h3>
+          <p>{t('pillar_live_text')}</p>
         </div>
         <div className="pillar pillar--mustard">
-          <h3 className="pillar__title">Create</h3>
-          <p>Community art workshops, music, participatory construction and crafts. L'Es-Cargo is a canvas in perpetual evolution.</p>
+          <h3 className="pillar__title">{t('pillar_create_title')}</h3>
+          <p>{t('pillar_create_text')}</p>
         </div>
         <div className="pillar pillar--green">
-          <h3 className="pillar__title">Connect</h3>
-          <p>Events, traveler hosting, land stewardship and residencies. An open community weaving lasting bonds.</p>
+          <h3 className="pillar__title">{t('pillar_connect_title')}</h3>
+          <p>{t('pillar_connect_text')}</p>
         </div>
       </div>
 
@@ -40,25 +42,18 @@ export default function Welcome() {
       <div className="location-block">
         <div className="location-block__text">
           <span className="tag" style={{ color: 'var(--forest-green)', borderColor: 'var(--forest-green)' }}>
-            Location
+            {t('location_tag')}
           </span>
-          <h2 className="location-block__title">In the heart of Quebec</h2>
-          <p>
-            Nestled in the Laurentians, L'Es-Cargo is a living place — surrounded
-            by forests, rivers and starry skies. A little more than an hour from Montreal,
-            but light-years away from the urban pace.
-          </p>
-          <p>
-            The property hosts the main earthship structure, camping spaces,
-            permaculture gardens, and construction zones in continuous development.
-          </p>
+          <h2 className="location-block__title">{t('location_title')}</h2>
+          <p>{t('location_p1')}</p>
+          <p>{t('location_p2')}</p>
           <a
             href="https://maps.google.com"
             target="_blank"
             rel="noopener noreferrer"
             className="location-block__map-btn"
           >
-            View on map →
+            {t('location_btn')}
           </a>
         </div>
         <div className="location-block__map-placeholder">
@@ -68,7 +63,7 @@ export default function Welcome() {
             <div className="map-ripple map-ripple--2" />
           </div>
           <p className="mono" style={{ fontSize: '0.7rem', marginTop: '1rem', opacity: 0.6 }}>
-            Laurentians, Quebec, Canada
+            {t('location_sub')}
           </p>
         </div>
       </div>
