@@ -1,4 +1,6 @@
 import { useLang } from '../context/LangContext'
+import photo1 from '../../photo-1.png'
+import photo2 from '../../photo-2.png'
 import './Historique.css'
 
 export default function History() {
@@ -53,6 +55,16 @@ export default function History() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* ── Photo strip ───────────────────────────────── */}
+      <div className="hist-photo-strip">
+        <div className="hist-photo-strip__cell">
+          <img src={photo1} alt="Escargo earthship exterior" loading="lazy" />
+        </div>
+        <div className="hist-photo-strip__cell">
+          <img src={photo2} alt="Escargo solar panels and structure" loading="lazy" />
         </div>
       </div>
 

@@ -217,3 +217,53 @@
   0% { transform: translateX(-50%) scale(0.5); opacity: 0.7; }
   100% { transform: translateX(-50%) scale(1.5); opacity: 0; }
 }
+
+/* ── Greenhouse photo band ──────────────────────────────── */
+.accueil-photo-band {
+  height: 420px;
+  overflow: hidden;
+  border-top: 3px solid var(--black-forest);
+  border-bottom: 3px solid var(--black-forest);
+}
+.accueil-photo-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
+
+@media (max-width: 560px) {
+  .accueil-photo-band { height: 260px; }
+}
+
+/* ── Location photo (replaces map placeholder) ──────────── */
+.location-block__photo {
+  position: relative;
+  border: 3px solid var(--black-forest);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 var(--black-forest);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.location-block__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.location-block__photo:hover img { transform: scale(1.03); }
+
+.location-block__photo-label {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: rgba(8, 24, 8, 0.65);
+  padding: 0.3em 0.7em;
+  border-radius: 3px;
+}

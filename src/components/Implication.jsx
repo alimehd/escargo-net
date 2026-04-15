@@ -1,4 +1,6 @@
 import { useLang } from '../context/LangContext'
+import photo4 from '../../photo-4.png'
+import photo5 from '../../photo-5.png'
 import './Implication.css'
 
 const WAY_KEYS = [
@@ -43,6 +45,16 @@ export default function GetInvolved() {
             </a>
           </div>
         ))}
+      </div>
+
+      {/* ── Kitchen photo strip ────────────────────────── */}
+      <div className="impl-photo-strip">
+        <div className="impl-photo-strip__cell">
+          <img src={photo4} alt="Communal kitchen inside the earthship" loading="lazy" />
+        </div>
+        <div className="impl-photo-strip__cell">
+          <img src={photo5} alt="Fresh produce in the communal kitchen" loading="lazy" />
+        </div>
       </div>
 
       {/* ── Big CTA ────────────────────────────────────── */}

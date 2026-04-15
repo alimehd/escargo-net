@@ -1,4 +1,6 @@
 import { useLang } from '../context/LangContext'
+import photo3 from '../../photo-3.png'
+import photo6 from '../../photo-6.png'
 import './Accueil.css'
 
 export default function Welcome() {
@@ -38,6 +40,11 @@ export default function Welcome() {
         </div>
       </div>
 
+      {/* ── Greenhouse photo band ────────────────────────── */}
+      <div className="accueil-photo-band">
+        <img src={photo3} alt="Inside the earthship greenhouse" loading="lazy" />
+      </div>
+
       {/* ── Location ─────────────────────────────────────── */}
       <div className="location-block">
         <div className="location-block__text">
@@ -56,15 +63,9 @@ export default function Welcome() {
             {t('location_btn')}
           </a>
         </div>
-        <div className="location-block__map-placeholder">
-          <div className="map-pin-anim" aria-hidden="true">
-            <div className="map-pin">📍</div>
-            <div className="map-ripple" />
-            <div className="map-ripple map-ripple--2" />
-          </div>
-          <p className="mono" style={{ fontSize: '0.7rem', marginTop: '1rem', opacity: 0.6 }}>
-            {t('location_sub')}
-          </p>
+        <div className="location-block__photo">
+          <img src={photo6} alt="Escargo permaculture garden" loading="lazy" />
+          <span className="location-block__photo-label mono">{t('location_sub')}</span>
         </div>
       </div>
 
