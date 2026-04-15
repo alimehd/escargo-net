@@ -76,7 +76,14 @@ const t = {
     event_gardenHarvest:     'Garden Day & Harvest Market',
     event_endSummer:         'End of Summer Celebration',
     event_toiletInauguration:'Toilet Inauguration Ceremony 🚽',
+    event_toiletDesc:        "It's happening. After months of digging, plumbing, and community prayer — the composting toilet is ready. Come witness this historic flush. Ceremony, music, and celebration on the Victoria Day long weekend.",
     event_stjeanLaunch:      'St-Jean Launch Party 🎉',
+    event_stjeanDesc:        "Quebec's Fête Nationale meets Escargo's official launch party. Live music, fire, food, and community under the summer sky. This is the big one — bring your dancing feet and your friends.",
+    event_date_toilet:       'May 23, 2026',
+    event_date_stjean:       'June 20, 2026',
+    event_saveDate:          'Save the date',
+    event_victoriaWeekend:   'Victoria Day Long Weekend',
+    event_stjeanWeekend:     'Fête Nationale Weekend',
     season_spring_name: 'Spring',
     season_spring_note: 'Planting, tire-packing sessions, mud season builds.',
     season_summer_name: 'Summer',
@@ -123,6 +130,11 @@ const t = {
     form_opt7:    'Something else',
     form_message: 'Tell us a bit about yourself and what brings you here…',
     form_submit:  'Send it →',
+
+    // ── Gallery ────────────────────────────────────────
+    gallery_tag:   'The Land',
+    gallery_title: 'Spring 2026.',
+    gallery_lead:  'A glimpse of the property as it comes alive.',
 
     // ── Footer ─────────────────────────────────────────
     footer_tagline:   "Quebec's first earthship commune.\nCultivate the imagination.",
@@ -215,7 +227,14 @@ const t = {
     event_gardenHarvest:     'Journée au Jardin & Marché des Récoltes',
     event_endSummer:         "Célébration de la Fin de l'Été",
     event_toiletInauguration:"Cérémonie d'Inauguration des Toilettes 🚽",
+    event_toiletDesc:        "Ça se passe. Après des mois de creusage, de plomberie et de prières communautaires — la toilette compostable est prête. Venez témoigner de cette chasse historique. Cérémonie, musique et célébration lors de la fin de semaine de la Fête de Victoria.",
     event_stjeanLaunch:      'Fête de Lancement St-Jean 🎉',
+    event_stjeanDesc:        "La Fête nationale rencontre la fête de lancement officielle d'Escargo. Musique live, feu, nourriture et communauté sous le ciel estival. C'est le grand événement — amenez vos pieds dansants et vos ami(e)s.",
+    event_date_toilet:       '23 mai 2026',
+    event_date_stjean:       '20 juin 2026',
+    event_saveDate:          'À vos agendas',
+    event_victoriaWeekend:   'Fin de semaine de la Fête de Victoria',
+    event_stjeanWeekend:     'Fin de semaine de la Fête Nationale',
     season_spring_name: 'Printemps',
     season_spring_note: 'Plantation, sessions de compactage de pneus, constructions de la saison des boues.',
     season_summer_name: 'Été',
@@ -262,6 +281,11 @@ const t = {
     form_opt7:    'Autre chose',
     form_message: 'Parlez-nous un peu de vous et de ce qui vous amène ici…',
     form_submit:  'Envoyer →',
+
+    // ── Gallery ────────────────────────────────────────
+    gallery_tag:   'Les Lieux',
+    gallery_title: 'Printemps 2026.',
+    gallery_lead:  'Un aperçu de la propriété qui prend vie.',
 
     // ── Footer ─────────────────────────────────────────
     footer_tagline:   "Le premier earthship commune du Québec.\nCultivez l'imaginaire.",

@@ -4,6 +4,7 @@ import Nav from './components/Nav'
 import Hero from './components/Hero'
 import Welcome from './components/Accueil'
 import History from './components/Historique'
+import Gallery from './components/Gallery'
 import Activities from './components/Activites'
 import GetInvolved from './components/Implication'
 import Footer from './components/Footer'
@@ -17,6 +18,7 @@ function HomePage() {
         <Hero />
         <Welcome />
         <History />
+        <Gallery />
         <Activities />
         <GetInvolved />
       </main>

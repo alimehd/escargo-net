@@ -51,219 +51,178 @@
   max-width: 560px;
 }
 
-/* ── Events calendar ─────────────────────────────────────── */
-.events-calendar {
+/* ── Event poster grid ───────────────────────────────────── */
+.event-posters {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   border-bottom: 3px solid var(--black-forest);
+  min-height: 540px;
 }
 
-@media (max-width: 900px) {
-  .events-calendar { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px) {
-  .events-calendar { grid-template-columns: 1fr; }
+@media (max-width: 720px) {
+  .event-posters { grid-template-columns: 1fr; }
 }
 
-.events-month {
+/* ── Individual poster card ──────────────────────────────── */
+.event-poster {
+  position: relative;
+  overflow: hidden;
   border-right: 3px solid var(--black-forest);
   display: flex;
   flex-direction: column;
 }
-.events-month:last-child { border-right: none; }
+.event-poster:last-child { border-right: none; }
 
-.events-month__header {
+.event-poster--green  { background: var(--black-forest); }
+.event-poster--orange { background: var(--mustard); }
+
+/* ── Giant ghost number ──────────────────────────────────── */
+.event-poster__bg-num {
+  position: absolute;
+  bottom: -0.15em;
+  right: -0.05em;
+  font-family: 'Abril Fatface', cursive;
+  font-size: clamp(12rem, 28vw, 22rem);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.event-poster--green  .event-poster__bg-num { color: rgba(255,255,255,0.04); }
+.event-poster--orange .event-poster__bg-num { color: rgba(16,73,17,0.08); }
+
+/* ── Card content ────────────────────────────────────────── */
+.event-poster__inner {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 3rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.event-poster__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.event-poster__weekend {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.event-poster--green  .event-poster__weekend { color: var(--mustard); }
+.event-poster--orange .event-poster__weekend { color: var(--forest-green); }
+
+.event-poster__save {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.3em 0.8em;
+  border-radius: 999px;
+  border: 1.5px solid;
+}
+.event-poster--green  .event-poster__save {
+  color: var(--cream);
+  border-color: rgba(255,255,255,0.35);
+}
+.event-poster--orange .event-poster__save {
+  color: var(--black-forest);
+  border-color: rgba(16,73,17,0.4);
+}
+
+/* ── Date block ──────────────────────────────────────────── */
+.event-poster__date {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  padding: 1.6rem 1.6rem 1rem;
-  border-bottom: 2px solid var(--black-forest);
-  background: var(--black-forest);
-}
-
-.events-month__name {
-  font-family: 'Abril Fatface', cursive;
-  font-size: 2rem;
-  color: var(--mustard);
-  line-height: 1;
-  text-shadow: 2px 2px 0 var(--forest-green);
-}
-
-.events-month__year {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  color: var(--cream);
-  opacity: 0.55;
-}
-
-.events-list {
-  list-style: none;
-  flex: 1;
-}
-
-.event-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 1.4rem;
-  border-bottom: 1px solid rgba(16,73,17,0.1);
-  transition: background 0.15s;
-}
-.event-row:last-child { border-bottom: none; }
-.event-row:hover { background: rgba(16,73,17,0.04); }
-
-/* Left accent stripe by type */
-.event-row--green   { border-left: 4px solid var(--forest-green); }
-.event-row--orange  { border-left: 4px solid var(--orange); }
-.event-row--blue    { border-left: 4px solid var(--light-blue); }
-.event-row--mustard { border-left: 4px solid var(--mustard); }
-.event-row--red     { border-left: 4px solid #d45f3c; }
-
-.event-row__date {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 36px;
-  flex-shrink: 0;
-}
-
-.event-row__day {
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #888;
-  line-height: 1;
-}
-
-.event-row__num {
-  font-family: 'Abril Fatface', cursive;
-  font-size: 1.35rem;
-  color: var(--black-forest);
-  line-height: 1.1;
-}
-
-.event-row__label {
-  font-size: 0.88rem;
-  line-height: 1.4;
-  color: var(--dark-text);
-  flex: 1;
-}
-
-.event-row__tag {
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.2em 0.55em;
-  border-radius: 999px;
-  border: 1.5px solid currentColor;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.event-row__tag--green   { color: var(--forest-green); }
-.event-row__tag--orange  { color: #b85c00; }
-.event-row__tag--blue    { color: #2a7fa8; }
-.event-row__tag--mustard { color: #8a6e00; }
-.event-row__tag--red     { color: #d45f3c; }
-
-/* ── Legend ──────────────────────────────────────────────── */
-.events-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 2rem;
-  padding: 1.2rem 2rem;
-  border-bottom: 3px solid var(--black-forest);
-  background: #f5f2eb;
-}
-
-.events-legend__item {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dark-text);
-}
-
-.events-legend__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.events-legend__dot--green   { background: var(--forest-green); }
-.events-legend__dot--orange  { background: var(--orange); }
-.events-legend__dot--blue    { background: var(--light-blue); }
-.events-legend__dot--mustard { background: var(--mustard); }
-.events-legend__dot--red     { background: #d45f3c; }
-
-/* ── Seasons band ────────────────────────────────────────── */
-.seasons-band {
-  background: var(--black-forest);
-  border-top: 3px solid var(--black-forest);
-  padding: 5rem 2rem;
-}
-
-.seasons-band__inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  align-items: center;
-}
-
-.seasons-band__title {
-  font-family: 'Abril Fatface', cursive;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--mustard);
-  text-align: center;
-  text-shadow: 2px 2px 0 var(--forest-green);
-}
-
-.seasons-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.2rem;
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .seasons-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .seasons-grid { grid-template-columns: 1fr; }
-}
-
-.season-card {
-  background: rgba(255,255,255,0.06);
-  border: 2px solid rgba(255,212,73,0.4);
-  border-radius: 6px;
-  padding: 1.4rem 1.2rem;
-  display: flex;
-  flex-direction: column;
   gap: 0.6rem;
-  transition: background 0.2s, border-color 0.2s;
 }
 
-.season-card:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: var(--mustard);
-}
-
-.season-card__name {
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
+.event-poster__month {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--mustard);
+  opacity: 0.7;
+}
+.event-poster__year {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  opacity: 0.5;
+}
+.event-poster--green  .event-poster__month,
+.event-poster--green  .event-poster__year  { color: var(--cream); }
+.event-poster--orange .event-poster__month,
+.event-poster--orange .event-poster__year  { color: var(--black-forest); }
+
+.event-poster__day {
+  font-family: 'Abril Fatface', cursive;
+  font-size: clamp(4rem, 10vw, 7rem);
+  line-height: 1;
+}
+.event-poster--green  .event-poster__day { color: var(--mustard); text-shadow: 4px 4px 0 var(--forest-green); }
+.event-poster--orange .event-poster__day { color: var(--black-forest); text-shadow: 3px 3px 0 rgba(16,73,17,0.25); }
+
+/* ── Title ───────────────────────────────────────────────── */
+.event-poster__title {
+  font-family: 'Abril Fatface', cursive;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  line-height: 1.15;
+}
+.event-poster--green  .event-poster__title { color: var(--cream); }
+.event-poster--orange .event-poster__title { color: var(--black-forest); }
+
+/* ── Description ─────────────────────────────────────────── */
+.event-poster__desc {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  max-width: 380px;
+  opacity: 0.85;
+}
+.event-poster--green  .event-poster__desc { color: var(--cream); }
+.event-poster--orange .event-poster__desc { color: var(--black-forest); }
+
+/* ── CTA button ──────────────────────────────────────────── */
+.event-poster__btn {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: auto;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.65rem 1.4rem;
+  border-radius: 4px;
+  border: 2px solid;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 3px 3px 0;
+}
+.event-poster--green .event-poster__btn {
+  color: var(--black-forest);
+  background: var(--mustard);
+  border-color: var(--mustard);
+  box-shadow-color: var(--forest-green);
+  box-shadow: 3px 3px 0 var(--forest-green);
+}
+.event-poster--green .event-poster__btn:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 5px 5px 0 var(--forest-green);
+}
+.event-poster--orange .event-poster__btn {
+  color: var(--cream);
+  background: var(--black-forest);
+  border-color: var(--black-forest);
+  box-shadow: 3px 3px 0 var(--forest-green);
+}
+.event-poster--orange .event-poster__btn:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 5px 5px 0 var(--forest-green);
 }
 
-.season-card p {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: var(--cream);
-  opacity: 0.85;
-  margin: 0;
+@media (max-width: 480px) {
+  .event-poster__inner { padding: 2rem 1.6rem 2.5rem; }
 }
