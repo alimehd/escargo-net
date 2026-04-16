@@ -11,7 +11,7 @@ const t = {
 
     // ── Hero ───────────────────────────────────────────
     hero_eyebrow:    'Quebec · Earthship · Commune',
-    hero_subtitle:   'Cultivate the imagination — nurturing new ways of living, creating, and connecting.',
+    hero_subtitle:   'Cultivate the imagination.',
     hero_cta:        'Discover →',
     hero_scroll:     'scroll',
 
@@ -162,7 +162,7 @@ const t = {
 
     // ── Hero ───────────────────────────────────────────
     hero_eyebrow:    'Québec · Earthship · Commune',
-    hero_subtitle:   "Cultivez l'imaginaire — nourrir de nouvelles façons de vivre, de créer et de se connecter.",
+    hero_subtitle:   "Cultivez l'imaginaire.",
     hero_cta:        'Découvrir →',
     hero_scroll:     'défiler',
 
